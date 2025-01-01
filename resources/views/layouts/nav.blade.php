@@ -15,11 +15,11 @@ $currentRouteName = Route::currentRouteName();
                 <li class="nav-item col-2 col-md-auto"><a href="{{ route('home') }}"
                         class="nav-link @if($currentRouteName == 'home') active @endif">Home</a></li>
                 <li class="nav-item col-2 col-md-auto"><a href="{{ route('consultation.index')}}"
-                        class="nav-link @if($currentRouteName == 'consultation.index') active @endif">Konsultasi</a></li>
+                        class="nav-link @if($currentRouteName == 'consultation.index') active @endif">Data Dokter</a></li>
                 <li class="nav-item col-2 col-md-auto"><a href="{{ route('pasien.index')}}"
                         class="nav-link @if($currentRouteName == 'pasien.index') active @endif">Data Pasien</a></li>
                 <li class="nav-item col-2 col-md-auto"><a href="{{ route('jadwal.index')}}"
-                        class="nav-link @if($currentRouteName == 'jadwal.index') active @endif">Jadwal</a></li>
+                        class="nav-link @if($currentRouteName == 'jadwal.index') active @endif">Jadwal Konsultasi</a></li>
                 <li class="nav-item col-2 col-md-auto"><a href="{{ route('payment.index')}}"
                         class="nav-link @if($currentRouteName == 'payment.index') active @endif"
                         class="nav-link">Payment</a></li>
