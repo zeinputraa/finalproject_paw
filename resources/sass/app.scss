@@ -10,6 +10,10 @@
 @import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
+body {
+    padding-top: 80px;
+}
+
 .custom-green {
-    background-color: #28a745; /* Ganti dengan kode warna hijau pilihan Anda */
+    background-color: #28a745;
 }
