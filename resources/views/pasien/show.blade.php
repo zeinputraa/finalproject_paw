@@ -1,40 +1,42 @@
 @extends('layouts.app')
+
 @section('content')
 <div class="container-sm my-5">
     <div class="row justify-content-center">
-        <div class="p-5 bg-light rounded-3 col-xl-4 border">
+        <div class="p-5 bg-light rounded-3 border col-xl-8">
             <div class="mb-3 text-center">
                 <i class="bi-person-circle fs-1"></i>
-                <h4>Detail Employee</h4>
+                <h4>Detail Pasien</h4>
             </div>
             <hr>
             <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label for="firstName" class="form-label">First Name</label>
-                    <h5>First Name Placeholder</h5>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="lastName" class="form-label">Last Name</label>
-                    <h5>Last Name Placeholder</h5>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="age" class="form-label">Age</label>
-                    <h5>Age Placeholder</h5>
+                <div class="col-md-12 mb-3">
+                    <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
+                    <h5>{{ $pasien->nama_lengkap }}</h5>
                 </div>
                 <div class="col-md-12 mb-3">
+                    <label for="umur" class="form-label">Umur</label>
+                    <h5>{{ $pasien->umur }}</h5>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label for="no_pasien" class="form-label">No Pasien</label>
+                    <h5>{{ $pasien->no_pasien }}</h5>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label for="paket_konsultasi" class="form-label">Paket Konsultasi</label>
+                    <h5>{{ $pasien->paket_konsultasi }}</h5>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                    <h5>{{ $pasien->jenis_kelamin }}</h5>
+                </div>
+                <div class="col-md-6 mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <h5>Email Placeholder</h5>
+                    <h5>{{ $pasien->email ?? 'N/A' }}</h5>
                 </div>
-                <div class="col-md-12 mb-3">
-                    <label for="position" class="form-label">Position</label>
-                    <h5>Position Placeholder</h5>
-                </div>
-                <div class="col-md-12 mb-3">
-                    <label for="cv" class="form-label">Curriculum Vitae (CV)</label>
-                    <h5>CV Placeholder</h5>
-                    <a href="#" class="btn btn-primary btn-sm mt-2">
-                        <i class="bi bi-download me-1"></i> Download CV
-                    </a>
+                <div class="col-md-6 mb-3">
+                    <label for="nomor_ponsel" class="form-label">Nomor Ponsel</label>
+                    <h5>{{ $pasien->nomor_ponsel }}</h5>
                 </div>
             </div>
             <hr>
@@ -46,5 +48,4 @@
         </div>
     </div>
 </div>
-
 @endsection

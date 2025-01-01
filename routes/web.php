@@ -76,3 +76,9 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::post('/login', [LoginController::class, 'authenticate']);
+
+Route::resource('pasien', PasienController::class);
+
+Route::get('/pasien/{id}/edit', [PasienController::class, 'edit'])->name('pasien.edit');
+
+Route::put('/pasien/{id}', [PasienController::class, 'update'])->name('pasien.update');
