@@ -7,7 +7,7 @@
             <div class="p-5 bg-light rounded-3 border col-xl-8">
                 <div class="mb-3 text-center">
                     <i class="bi-person-circle fs-1"></i>
-                    <h4>Create Jadwal</h4>
+                    <h4>bla</h4>
                 </div>
                 <hr>
                 <div class="row">
