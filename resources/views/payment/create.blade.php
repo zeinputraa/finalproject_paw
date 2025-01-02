@@ -1,57 +1,94 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('content')
-<div class="container-sm mt-5">
-    <form action="#" method="POST" enctype="multipart/form-data">
-        <div class="row justify-content-center">
-            <div class="p-5 bg-light rounded-3 border col-xl-8">
-                <div class="mb-3 text-center">
-                    <i class="bi-person-circle fs-1"></i>
-                    <h4>bla</h4>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $pageTitle }}</title>
+    @vite('resources/sass/app.scss')
+</head>
+
+<body>
+    @include('layouts.nav')
+
+    <div class="container mt-4">
+        <h4 class="mb-3">Tambah Payment</h4>
+
+        <form action="{{ route('payment.store') }}" method="POST">
+            @csrf
+
+            <!-- Pasien and Dokter Selection -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="pasien_id" class="form-label">Nama Pasien</label>
+                    <select id="pasien_id" name="pasien_id" class="form-select" required>
+                        <option value="" disabled selected>Pilih Pasien</option>
+                        @foreach($pasiens as $pasien)
+                            <option value="{{ $pasien->id }}"
+                                    @if(old('pasien_id') == $pasien->id) selected @endif>
+                                {{ $pasien->nama_lengkap }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
-                <hr>
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <label for="firstName" class="form-label">Nama Pasien</label>
-                        <input class="form-control" type="text" name="firstName" id="firstName" placeholder="Masukan Nama Pasien">
-                    </div>
-                    <div class="col-md-12 mb-3">
-                        <label for="age" class="form-label">Nama Dokter</label>
-                        <input class="form-control" type="number" name="age" id="age" placeholder="Masukan Nama Dokter">
-                    </div>
-                    <div class="col-md-12 mb-3">
-                        <label for="paketKonsultasi" class="form-label">Paket Konsultasi</label>
-                        <select class="form-control" name="paketKonsultasi" id="paketKonsultasi">
-                            <option value="">Pilih Paket Konsultasi</option>
-                            <option value="paket1">Paket 1</option>
-                            <option value="paket2">Paket 2</option>
-                            <option value="paket3">Paket 3</option>
-                        </select>
-                    </div>
-                    <div class="col-md-12 mb-3">
-                        <label for="waktuKonsultasi" class="form-label">Waktu Konsultasi</label>
-                        <input type="datetime-local" class="form-control" name="waktuKonsultasi" id="waktuKonsultasi">
-                    </div>
-                    <div class="col-md-12 mb-3">
-                        <label for="gender" class="form-label">Status</label>
-                        <select class="form-control" name="gender" id="gender">
-                            <option value="">Pilih Status</option>
-                            <option value="male">Ongoing</option>
-                            <option value="female">Complete</option>
-                        </select>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-md-6 d-grid">
-                        <a href="{{ route('jadwal.index') }}" class="btn btn-outline-dark btn-lg mt-3"><i class="bi-arrow-left-circle me-2"></i> Cancel</a>
-                    </div>
-                    <div class="col-md-6 d-grid">
-                        <button type="submit" class="btn btn-dark btn-lg mt-3"><i class="bi-check-circle me-2"></i> Save</button>
-                    </div>
+
+
+                <div class="col-md-6">
+                    <label for="dokter_id" class="form-label">Nama Dokter</label>
+                    <select id="dokter_id" name="dokter_id" class="form-select" required>
+                        <option value="" disabled selected>Pilih Dokter</option>
+                        @foreach($dokters as $dokter)
+                            <option value="{{ $dokter->id }}"
+                                    @if(old('dokter_id') == $dokter->id) selected @endif>
+                                {{ $dokter->nama_lengkap }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
-@endsection
+
+            <!-- Paket and Payment Status Selection -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="paket_id" class="form-label">Paket yang Dipilih</label>
+                    <select id="paket_id" name="paket_id" class="form-select" required>
+                        <option value="" disabled selected>Pilih Paket</option>
+                        @foreach($pakets as $paket)
+                            <option value="{{ $paket->id }}"
+                                    @if(old('paket_id') == $paket->id) selected @endif>
+                                {{ $pasien->paket_konsultasi }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="status_pembayaran" class="form-label">Status Pembayaran</label>
+                    <select id="status_pembayaran" name="status_pembayaran" class="form-select" required>
+                        <option value="paid" @if(old('status_pembayaran') == 'paid') selected @endif>Paid</option>
+                        <option value="unpaid" @if(old('status_pembayaran') == 'unpaid') selected @endif>Unpaid</option>
+                        <option value="pending" @if(old('status_pembayaran') == 'pending') selected @endif>Pending</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Amount Input -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="amount" class="form-label">Amount</label>
+                    <input type="number" id="amount" name="amount" class="form-control"
+                           value="{{ old('amount') }}" required>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Save Payment</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

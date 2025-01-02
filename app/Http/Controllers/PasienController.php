@@ -34,21 +34,32 @@ class PasienController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi data yang diterima
+        // Validate input
         $validated = $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'umur' => 'required|integer',
-            'no_pasien' => 'required|unique:pasiens|integer',
-            'dokter_id' => 'required|exists:dokters,id',  // Menambahkan validasi untuk dokter
-            'jenis_kelamin' => 'required|string',
-            'email' => 'nullable|email',
+            'no_pasien' => 'required|numeric|unique:pasiens,no_pasien',
+            'paket_konsultasi' => 'required|exists:dokters,id',
+            'jenis_kelamin' => 'required|in:male,female',
+            'email' => 'nullable|email|max:255',
             'nomor_ponsel' => 'required|numeric',
         ]);
 
-        // Simpan data pasien
-        Pasien::create($validated);
+        // Create a new Pasien record
+        $pasien = new Pasien;
+        $pasien->nama_lengkap = $validated['nama_lengkap'];
+        $pasien->umur = $validated['umur'];
+        $pasien->no_pasien = $validated['no_pasien'];
+        $pasien->paket_konsultasi = $validated['paket_konsultasi'];
+        $pasien->jenis_kelamin = $validated['jenis_kelamin'];
+        $pasien->email = $validated['email'] ?? null; // Optional field
+        $pasien->nomor_ponsel = $validated['nomor_ponsel'];
 
-        return redirect()->route('pasien.index')->with('success', 'Pasien berhasil ditambahkan');
+        // Save the record to the database
+        $pasien->save();
+
+        // Redirect or return a response
+        return redirect()->route('pasien.index')->with('success', 'Pasien created successfully.');
     }
 
     /**

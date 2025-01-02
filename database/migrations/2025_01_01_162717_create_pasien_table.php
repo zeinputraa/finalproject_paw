@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Membuat tabel 'pasiens' dengan kolom yang ada
         Schema::create('pasiens', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_lengkap', 255);
+            $table->string('nama_lengkap');
             $table->integer('umur');
-            $table->bigInteger('no_pasien');  // Menyimpan no_pasien sebagai BIGINT
-            $table->string('paket_konsultasi', 50);
+            $table->string('no_pasien')->unique();
+            $table->foreignId('dokter_id')->constrained('dokters');
             $table->enum('jenis_kelamin', ['male', 'female']);
-            $table->string('email', 255)->nullable();
-            $table->string('nomor_ponsel', 20)->nullable();
+            $table->string('email')->nullable();
+            $table->string('nomor_ponsel');
             $table->timestamps();
         });
     }
@@ -30,7 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Menghapus tabel 'pasiens' saat rollback
         Schema::dropIfExists('pasiens');
     }
 };

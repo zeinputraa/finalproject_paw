@@ -7,19 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jadwal extends Model
 {
-    use HasFactory;
-
-    protected $fillable = [
-        'nama_lengkap',
-        'umur',
-        'nama_dokter',
-        'lokasi_praktik',
-        'waktu_konsultasi',
-        'riwayat',
-    ];
-
     public function dokter()
     {
-        return $this->belongsTo(Dokter::class, 'dokter_id'); // Jika ada kolom dokter_id
+        return $this->belongsTo(Dokter::class, 'dokter_id');
     }
+
+    protected $fillable = [
+        'dokter_id',
+        'waktu_konsultasi',
+        'lokasi_praktik',
+        'riwayat'
+    ];
 }

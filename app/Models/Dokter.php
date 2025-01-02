@@ -2,26 +2,15 @@
 
 namespace App\Models;
 use App\Models\Pasien;
-use App\Models\Jadwal;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Dokter extends Model
 {
-    use HasFactory;
-
-    protected $table = 'dokter';
-
-    protected $fillable = [
-        'nama_lengkap',
-        'umur',
-        'bidang_keahlian',
-        'lokasi_praktik',
-        'riwayat',
-    ];
-
-    public function pasiens()
+    // Relasi dengan Jadwal
+    public function jadwals()
     {
-        return $this->hasMany(Pasien::class);
+        return $this->hasMany(Jadwal::class, 'dokter_id');
     }
 }

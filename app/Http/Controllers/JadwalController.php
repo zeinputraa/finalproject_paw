@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Dokter;
 use App\Models\Jadwal;
 use Illuminate\Http\Request;
@@ -16,7 +17,6 @@ class JadwalController extends Controller
         return view('jadwal.index', compact('jadwals', 'pageTitle'));
     }
 
-
     // Menampilkan form untuk membuat jadwal baru
     public function create()
     {
@@ -27,22 +27,30 @@ class JadwalController extends Controller
     // Menyimpan data jadwal yang baru dibuat
     public function store(Request $request)
     {
-        // Validasi input dari form
+        // Validate the incoming request data
         $validated = $request->validate([
             'nama_lengkap' => 'required|string|max:255',
-            'umur' => 'required|numeric|min:0',
-            'nama_dokter' => 'required|string|max:255',
+            'umur' => 'required|integer|min:0',
+            'nama_dokter' => 'required|exists:dokters,id',
             'lokasi_praktik' => 'required|string|max:255',
             'waktu_konsultasi' => 'required|date',
-            'riwayat' => 'required|string|max:1000',
+            'riwayat' => 'required|string',
         ]);
 
-        // Menyimpan data ke tabel jadwals
-        Jadwal::create($validated);
+        // Create a new consultation record in the database
+        $jadwal = new Jadwal();
+        $jadwal->nama_lengkap = $validated['nama_lengkap'];
+        $jadwal->umur = $validated['umur'];
+        $jadwal->nama_dokter = $validated['nama_dokter'];
+        $jadwal->lokasi_praktik = $validated['lokasi_praktik'];
+        $jadwal->waktu_konsultasi = $validated['waktu_konsultasi'];
+        $jadwal->riwayat = $validated['riwayat'];
+        $jadwal->save();  // Save the new consultation to the database
 
-        // Redirect setelah sukses
-        return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil dibuat.');
+        // Redirect to a page with a success message
+        return redirect()->route('jadwal.index')->with('success', 'Consultation created successfully!');
     }
+
 
     // Menampilkan detail dari satu jadwal
     public function show($id)
@@ -67,25 +75,24 @@ class JadwalController extends Controller
 
     // Mengupdate data jadwal yang telah ada
     public function update(Request $request, $id)
-    {
-        // Validasi input dari form
-        $validated = $request->validate([
-            'nama_lengkap' => 'required|string|max:255',
-            'umur' => 'required|numeric|min:0',
-            'nama_dokter' => 'required|string|max:255',
-            'lokasi_praktik' => 'required|string|max:255',
-            'waktu_konsultasi' => 'required|date',
-            'riwayat' => 'required|string|max:1000',
-        ]);
+{
+    // Validasi input
+    $validated = $request->validate([
+        'nama_lengkap' => 'required|string|max:255',
+        'umur' => 'required|numeric',
+        'no_pasien' => 'required|unique:pasien,no_pasien,' . $id,
+        'paket_konsultasi' => 'required|exists:dokters,id',
+        'jenis_kelamin' => 'required|string',
+        'email' => 'nullable|email',
+        'nomor_ponsel' => 'required|numeric',
+    ]);
 
-        // Mencari jadwal berdasarkan ID dan mengupdate datanya
-        $jadwal = Jadwal::findOrFail($id);
-        $jadwal->update($validated);
+    // Mencari pasien berdasarkan ID dan memperbarui data
+    $pasien = Pasien::findOrFail($id);
+    $pasien->update($validated);
 
-        // Redirect setelah update
-        return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil diperbarui.');
-    }
-
+    return redirect()->route('pasien.index')->with('success', 'Pasien berhasil diperbarui.');
+}
     // Menghapus jadwal berdasarkan ID
     public function destroy($id)
     {

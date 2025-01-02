@@ -14,11 +14,11 @@
     <div class="container mt-4">
         <div class="row mb-0">
             <div class="col-lg-9 col-xl-10">
-                <h4 class="mb-3">Jadwal Konsultasi</h4>
+                <h4 class="mb-3">List Payment</h4>
             </div>
             <div class="col-lg-3 col-xl-2">
                 <div class="d-grid gap-2">
-                    <a href="payment.create" class="btn btn-outline-success">
+                    <a href="{{ route('payment.create') }}" class="btn btn-outline-success">
                         <i class="bi bi-person-plus-fill me-1"></i>Tambah Payment
                     </a>
                 </div>
@@ -38,30 +38,38 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($payments as $payment)
                     <tr>
-                        <td>12345678</td>
-                        <td>Rezal Ihsanu</td>
-                        <td>Gentur Anto Judho S.Psi, Psikolog</td>
-                        <td>Paket 1</td>
-                        <td>Terbayar</td>
+                        <td>{{ $payment->pasien->nomor_pasien }}</td>
+                        <td>{{ $payment->pasien->nama }}</td>
+                        <td>{{ $payment->dokter->nama }}</td>
+                        <td>{{ $payment->paket->nama }}</td>
+                        <td>{{ $payment->status_pembayaran }}</td>
                         <td>
                             <div class="d-flex">
-                                <a href="pasien.show" class="btn btn-outline-dark btn-sm me-2"><i
-                                        class="bi-person-lines-fill"></i></a>
-                                <a href="pasien.edit" class="btn btn-outline-dark btn-sm me-2"><i
-                                        class="bi-pencil-square"></i></a>
-                                <a href="" class="btn btn-outline-dark btn-sm me-2"><i class="bi bi-file-earmark-ruled"></i></a>
-                                <button type="button" class="btn btn-outline-dark btn-sm"><i
-                                        class="bi-trash"></i></button>
+                                <a href="{{ route('pasien.show', $payment->pasien->id) }}" class="btn btn-outline-dark btn-sm me-2">
+                                    <i class="bi-person-lines-fill"></i>
+                                </a>
+                                <a href="{{ route('pasien.edit', $payment->pasien->id) }}" class="btn btn-outline-dark btn-sm me-2">
+                                    <i class="bi-pencil-square"></i>
+                                </a>
+                                <a href="#" class="btn btn-outline-dark btn-sm me-2"><i class="bi bi-file-earmark-ruled"></i></a>
+                                <form action="{{ route('payment.destroy', $payment->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-dark btn-sm">
+                                        <i class="bi-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </div>
 
-    <script src="path/to/your/app.js"></script>
 </body>
 
 </html>

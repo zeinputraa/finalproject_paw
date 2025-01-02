@@ -49,8 +49,13 @@ Route::get('/pasien/{id}/edit', [PasienController::class, 'edit'])->name('pasien
 Route::put('/pasien/{id}', [PasienController::class, 'update'])->name('pasien.update');
 Route::delete('/pasien/{id}', [PasienController::class, 'destroy'])->name('pasien.destroy');
 
-// Routes for Payment
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
+Route::post('/payment', [PaymentController::class, 'store'])->name('payment.store');
+Route::get('/payment/{payment}', [PaymentController::class, 'show'])->name('payment.show');
+Route::get('/payment/{payment}/edit', [PaymentController::class, 'edit'])->name('payment.edit');
+Route::put('/payment/{payment}', [PaymentController::class, 'update'])->name('payment.update');
+Route::delete('/payment/{payment}', [PaymentController::class, 'destroy'])->name('payment.destroy');
 
 // Authentication Routes
 Auth::routes();
