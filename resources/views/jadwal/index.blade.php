@@ -18,7 +18,7 @@
             </div>
             <div class="col-lg-3 col-xl-2">
                 <div class="d-grid gap-2">
-                    <a href="jadwal.create" class="btn btn-outline-success">
+                    <a href="{{ route('jadwal.create') }}" class="btn btn-outline-success">
                         <i class="bi bi-person-plus-fill me-1"></i>Tambah Jadwal
                     </a>
                 </div>
@@ -29,40 +29,51 @@
             <table class="table table-bordered table-hover table-striped mb-0 bg-white">
                 <thead>
                     <tr>
-                        <th>Nomer Pasien</th>
-                        <th>Nama Pasien</th>
-                        <th>Nama Dokter</th>
-                        <th>Paket Konsultasi</th>
+                        <th>#</th>
+                        <th>Nama Lengkap</th>
+                        <th>Dokter</th>
+                        <th>Lokasi Praktik</th>
                         <th>Waktu Konsultasi</th>
-                        <th>Status Konsultasi</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>12345678</td>
-                        <td>Rezal Ihsanu</td>
-                        <td>Gentur Anto Judho S.Psi, Psikolog</td>
-                        <td>Paket 1</td>
-                        <td>20/02/2025</td>
-                        <td>Ongoing</td>
-                        <td>
-                            <div class="d-flex">
-                                <a href="jadwal.show" class="btn btn-outline-dark btn-sm me-2"><i
-                                        class="bi-person-lines-fill"></i></a>
-                                <a href="jadwal.edit" class="btn btn-outline-dark btn-sm me-2"><i
-                                        class="bi-pencil-square"></i></a>
-                                <button type="button" class="btn btn-outline-dark btn-sm"><i
-                                        class="bi-trash"></i></button>
-                            </div>
-                        </td>
-                    </tr>
+                    @foreach($jadwals as $jadwal)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $jadwal->nama_lengkap }}</td>
+                            <td>
+                                @if($jadwal->dokter)
+                                    {{ $jadwal->dokter->nama_lengkap }}
+                                @else
+                                    Dokter tidak tersedia
+                                @endif
+                            </td>
+                            <td>{{ $jadwal->lokasi_praktik }}</td>
+                            <td>{{ \Carbon\Carbon::parse($jadwal->waktu_konsultasi)->format('d-m-Y H:i') }}</td> <!-- Format tanggal -->
+                            <td>
+                                <div class="d-flex">
+                                    <a href="{{ route('jadwal.show', $jadwal->id) }}" class="btn btn-outline-dark btn-sm me-2">
+                                        <i class="bi-person-lines-fill"></i>
+                                    </a>
+                                    <a href="{{ route('jadwal.edit', $jadwal->id) }}" class="btn btn-outline-dark btn-sm me-2">
+                                        <i class="bi-pencil-square"></i>
+                                    </a>
+                                    <form action="{{ route('jadwal.destroy', $jadwal->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pasien ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-outline-dark btn-sm">
+                                            <i class="bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-
-    <script src="path/to/your/app.js"></script>
 </body>
 
 </html>

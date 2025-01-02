@@ -17,8 +17,8 @@
             </div>
             <div class="col-lg-3 col-xl-2">
                 <div class="d-grid gap-2">
-                    <a href="consultation.create" class="btn btn-outline-success">
-                        <i class="bi bi-file-earmark-plus me-1"></i>Tambah Paket
+                    <a href="{{ route('consultation.create') }}" class="btn btn-outline-success">
+                        <i class="bi bi-file-earmark-plus me-1"></i>Tambah Dokter
                     </a>
                 </div>
             </div>
@@ -37,29 +37,33 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($dokters as $dokter)
                     <tr>
-                        <td>Gentur Anto Judho S.Psi, Psikolog</td>
-                        <td>22</td>
-                        <td>Gangguan Kecemasan</td>
-                        <td>Alumnus Universitas Islam Bandung</td>
-                        <td>Surabaya</td>
+                        <td>{{ $dokter->nama_lengkap }}</td>
+                        <td>{{ $dokter->umur }}</td>
+                        <td>{{ $dokter->bidang_keahlian }}</td>
+                        <td>{{ $dokter->riwayat }}</td>
+                        <td>{{ $dokter->lokasi_praktik }}</td>
                         <td>
                             <div class="d-flex">
-                                <a href="consultation.show" class="btn btn-outline-dark btn-sm me-2"><i
+                                <a href="{{ route('consultation.show', ['id' => $dokter->id]) }}" class="btn btn-outline-dark btn-sm me-2"><i
                                         class="bi-person-lines-fill"></i></a>
-                                <a href="consultation.edit" class="btn btn-outline-dark btn-sm me-2"><i
+                                <a href="{{ route('consultation.edit', ['id' => $dokter->id]) }}" class="btn btn-outline-dark btn-sm me-2"><i
                                         class="bi-pencil-square"></i></a>
-                                <button type="button" class="btn btn-outline-dark btn-sm"><i
-                                        class="bi-trash"></i></button>
+                                <form action="{{ route('consultation.destroy', ['id' => $dokter->id]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-dark btn-sm"><i
+                                            class="bi-trash"></i></button>
+                                </form>
                             </div>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-
-    <script src="path/to/your/app.js"></script>
 </body>
 
 </html>

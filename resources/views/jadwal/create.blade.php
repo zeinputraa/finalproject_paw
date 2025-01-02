@@ -2,52 +2,59 @@
 
 @section('content')
 <div class="container-sm mt-5">
-    <form action="#" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('jadwal.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
         <div class="row justify-content-center">
             <div class="p-5 bg-light rounded-3 border col-xl-8">
                 <div class="mb-3 text-center">
                     <i class="bi-person-circle fs-1"></i>
-                    <h4>Create Jadwal</h4>
+                    <h4>Create Konsultasi</h4>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12 mb-3">
-                        <label for="firstName" class="form-label">Nama Pasien</label>
-                        <input class="form-control" type="text" name="firstName" id="firstName" placeholder="Masukan Nama Pasien">
+                        <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
+                        <input class="form-control" type="text" name="nama_lengkap" id="nama_lengkap" placeholder="Masukkan nama lengkap" required>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <label for="age" class="form-label">Nama Dokter</label>
-                        <input class="form-control" type="number" name="age" id="age" placeholder="Masukan Nama Dokter">
+                        <label for="umur" class="form-label">Umur</label>
+                        <input class="form-control" type="number" name="umur" id="umur" placeholder="Masukkan umur" min="0" required>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <label for="paketKonsultasi" class="form-label">Paket Konsultasi</label>
-                        <select class="form-control" name="paketKonsultasi" id="paketKonsultasi">
-                            <option value="">Pilih Paket Konsultasi</option>
-                            <option value="paket1">Paket 1</option>
-                            <option value="paket2">Paket 2</option>
-                            <option value="paket3">Paket 3</option>
+                        <label for="dokter" class="form-label">Nama Dokter</label>
+                        <select class="form-control" name="nama_dokter" id="dokter" required>
+                            <option value="">Pilih Nama Dokter</option>
+                            @foreach($dokters as $dokter)
+                                <option value="{{ $dokter->id }}" {{ old('nama_dokter') == $dokter->id ? 'selected' : '' }}>
+                                    {{ $dokter->nama_lengkap }} - {{ $dokter->bidang_keahlian }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <label for="waktuKonsultasi" class="form-label">Waktu Konsultasi</label>
-                        <input type="datetime-local" class="form-control" name="waktuKonsultasi" id="waktuKonsultasi">
+                        <label for="lokasi_praktik" class="form-label">Lokasi Praktik</label>
+                        <input class="form-control" type="text" name="lokasi_praktik" id="lokasi_praktik" placeholder="Masukkan lokasi praktik" required>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <label for="gender" class="form-label">Status</label>
-                        <select class="form-control" name="gender" id="gender">
-                            <option value="">Pilih Status</option>
-                            <option value="male">Ongoing</option>
-                            <option value="female">Complete</option>
-                        </select>
+                        <label for="waktu_konsultasi" class="form-label">Waktu dan Tanggal Konsultasi</label>
+                        <input class="form-control" type="datetime-local" name="waktu_konsultasi" id="waktu_konsultasi" required>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label for="riwayat" class="form-label">Riwayat</label>
+                        <textarea class="form-control" name="riwayat" id="riwayat" placeholder="Masukkan riwayat" rows="4" required></textarea>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-6 d-grid">
-                        <a href="{{ route('jadwal.index') }}" class="btn btn-outline-dark btn-lg mt-3"><i class="bi-arrow-left-circle me-2"></i> Cancel</a>
+                        <a href="{{ route('consultation.index') }}" class="btn btn-outline-dark btn-lg mt-3">
+                            <i class="bi-arrow-left-circle me-2"></i> Cancel
+                        </a>
                     </div>
                     <div class="col-md-6 d-grid">
-                        <button type="submit" class="btn btn-dark btn-lg mt-3"><i class="bi-check-circle me-2"></i> Save</button>
+                        <button type="submit" class="btn btn-dark btn-lg mt-3">
+                            <i class="bi-check-circle me-2"></i> Save
+                        </button>
                     </div>
                 </div>
             </div>
