@@ -18,7 +18,7 @@
             </div>
             <div class="col-lg-3 col-xl-2">
                 <div class="d-grid gap-2">
-                    <a href="pasien.create" class="btn btn-outline-success">
+                    <a href="{{ route('pasien.create') }}" class="btn btn-outline-success">
                         <i class="bi bi-person-plus-fill me-1"></i>Tambah Pasien
                     </a>
                 </div>
@@ -38,29 +38,36 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($pasiens as $pasien)
                     <tr>
-                        <td>Rezal Ihsanu</td>
-                        <td>082131898358</td>
-                        <td>Paket 1</td>
-                        <td>24</td>
-                        <td>2465378</td>
+                        <td>{{ $pasien->nama_lengkap }}</td>
+                        <td>{{ $pasien->nomor_ponsel }}</td>
+                        <td>{{ $pasien->paket_konsultasi }}</td>
+                        <td>{{ $pasien->umur }}</td>
+                        <td>{{ $pasien->no_pasien }}</td>
                         <td>
                             <div class="d-flex">
-                                <a href="pasien.show" class="btn btn-outline-dark btn-sm me-2"><i
-                                        class="bi-person-lines-fill"></i></a>
-                                <a href="pasien.edit" class="btn btn-outline-dark btn-sm me-2"><i
-                                        class="bi-pencil-square"></i></a>
-                                <button type="button" class="btn btn-outline-dark btn-sm"><i
-                                        class="bi-trash"></i></button>
+                                <a href="{{ route('pasien.show', $pasien->id) }}" class="btn btn-outline-dark btn-sm me-2">
+                                    <i class="bi-person-lines-fill"></i>
+                                </a>
+                                <a href="{{ route('pasien.edit', $pasien->id) }}" class="btn btn-outline-dark btn-sm me-2">
+                                    <i class="bi-pencil-square"></i>
+                                </a>
+                                <form action="{{ route('pasien.destroy', $pasien->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pasien ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-dark btn-sm">
+                                        <i class="bi-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-
-    <script src="path/to/your/app.js"></script>
 </body>
 
 </html>
