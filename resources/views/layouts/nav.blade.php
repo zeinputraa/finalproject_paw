@@ -13,7 +13,7 @@ $currentRouteName = Route::currentRouteName();
             <hr class="d-md-none text-white-50">
             <ul class="navbar-nav flex-row flex-wrap">
                 <li class="nav-item col-2 col-md-auto"><a href="{{ route('home') }}"
-                        class="nav-link @if($currentRouteName == 'home') active @endif">Home</a></li>
+                        class="nav-link @if($currentRouteName == 'home') active @endif">Tanya Dokter</a></li>
                 <li class="nav-item col-2 col-md-auto"><a href="{{ route('consultation.index')}}"
                         class="nav-link @if($currentRouteName == 'consultation.index') active @endif">Konsultasi</a></li>
                 <li class="nav-item col-2 col-md-auto"><a href="{{ route('pasien.index')}}"
