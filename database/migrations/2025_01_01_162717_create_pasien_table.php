@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Membuat tabel 'pasiens' dengan kolom yang ada
         Schema::create('pasiens', function (Blueprint $table) {
             $table->id();
             $table->string('nama_lengkap', 255);
             $table->integer('umur');
-            $table->integer('no_pasien')->unique();
+            $table->bigInteger('no_pasien');  // Menyimpan no_pasien sebagai BIGINT
             $table->string('paket_konsultasi', 50);
             $table->enum('jenis_kelamin', ['male', 'female']);
             $table->string('email', 255)->nullable();
@@ -29,6 +30,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pasien');
+        // Menghapus tabel 'pasiens' saat rollback
+        Schema::dropIfExists('pasiens');
     }
 };

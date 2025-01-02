@@ -26,12 +26,17 @@
                         <input class="form-control" type="number" name="no_pasien" id="no_pasien" value="{{ $pasien->no_pasien }}" placeholder="Masukkan Nomor Pasien">
                     </div>
                     <div class="col-md-12 mb-3">
-                        <label for="paket_konsultasi" class="form-label">Paket Konsultasi</label>
+                        <label for="paket_konsultasi" class="form-label">Pilih Bidang Keahlian</label>
                         <select class="form-control" name="paket_konsultasi" id="paket_konsultasi">
-                            <option value="">Pilih Paket Konsultasi</option>
-                            <option value="paket1" {{ $pasien->paket_konsultasi == 'paket1' ? 'selected' : '' }}>Paket 1</option>
-                            <option value="paket2" {{ $pasien->paket_konsultasi == 'paket2' ? 'selected' : '' }}>Paket 2</option>
-                            <option value="paket3" {{ $pasien->paket_konsultasi == 'paket3' ? 'selected' : '' }}>Paket 3</option>
+                            <option value="">Pilih Bidang Keahlian</option>
+                            <option value="Psikologi Klinis" {{ $pasien->paket_konsultasi == 'Psikologi Klinis' ? 'selected' : '' }}>Psikologi Klinis</option>
+                            <option value="Psikologi Pendidikan" {{ $pasien->paket_konsultasi == 'Psikologi Pendidikan' ? 'selected' : '' }}>Psikologi Pendidikan</option>
+                            <option value="Psikologi Industri dan Organisasi" {{ $pasien->paket_konsultasi == 'Psikologi Industri dan Organisasi' ? 'selected' : '' }}>Psikologi Industri dan Organisasi</option>
+                            <option value="Psikologi Sosial" {{ $pasien->paket_konsultasi == 'Psikologi Sosial' ? 'selected' : '' }}>Psikologi Sosial</option>
+                            <option value="Psikologi Anak" {{ $pasien->paket_konsultasi == 'Psikologi Anak' ? 'selected' : '' }}>Psikologi Anak</option>
+                            <option value="Psikologi Forensik" {{ $pasien->paket_konsultasi == 'Psikologi Forensik' ? 'selected' : '' }}>Psikologi Forensik</option>
+                            <option value="Psikologi Kesehatan" {{ $pasien->paket_konsultasi == 'Psikologi Kesehatan' ? 'selected' : '' }}>Psikologi Kesehatan</option>
+                            <option value="Psikologi Perkembangan" {{ $pasien->paket_konsultasi == 'Psikologi Perkembangan' ? 'selected' : '' }}>Psikologi Perkembangan</option>
                         </select>
                     </div>
                     <div class="col-md-12 mb-3">

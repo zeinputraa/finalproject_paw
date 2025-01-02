@@ -5,24 +5,21 @@ use App\Models\Dokter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pasien extends Model
+class Jadwal extends Model
 {
     use HasFactory;
-
-    protected $table = 'pasiens';
 
     protected $fillable = [
         'nama_lengkap',
         'umur',
-        'no_pasien',
-        'paket_konsultasi',
-        'jenis_kelamin',
-        'email',
-        'nomor_ponsel',
+        'nama_dokter',
+        'lokasi_praktik',
+        'waktu_konsultasi',
+        'riwayat',
     ];
 
     public function dokter()
     {
-        return $this->belongsTo(Dokter::class);
+        return $this->belongsTo(Dokter::class, 'dokter_id'); // Jika ada kolom dokter_id
     }
 }

@@ -38,42 +38,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($pasiens as $pasien)
-                        <tr>
-                            <td>{{ $pasien->nama_lengkap }}</td>
-                            <td>{{ $pasien->nomor_ponsel }}</td>
-                            <td>{{ $pasien->paket_konsultasi }}</td>
-                            <td>{{ $pasien->umur }}</td>
-                            <td>{{ $pasien->no_pasien }}</td>
-                            <td>
-                                <div class="d-flex">
-                                    <a href="{{ route('pasien.show', $pasien->id) }}" class="btn btn-outline-dark btn-sm me-2">
-                                        <i class="bi-person-lines-fill"></i>
-                                    </a>
-                                    <a href="{{ route('pasien.edit', $pasien->id) }}" class="btn btn-outline-dark btn-sm me-2">
-                                        <i class="bi-pencil-square"></i>
-                                    </a>
-                                    <form action="{{ route('pasien.destroy', $pasien->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-outline-dark btn-sm">
-                                            <i class="bi-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="text-center">Tidak ada data pasien.</td>
-                        </tr>
-                    @endforelse
+                    @foreach ($pasiens as $pasien)
+                    <tr>
+                        <td>{{ $pasien->nama_lengkap }}</td>
+                        <td>{{ $pasien->nomor_ponsel }}</td>
+                        <td>{{ $pasien->paket_konsultasi }}</td>
+                        <td>{{ $pasien->umur }}</td>
+                        <td>{{ $pasien->no_pasien }}</td>
+                        <td>
+                            <div class="d-flex">
+                                <a href="{{ route('pasien.show', $pasien->id) }}" class="btn btn-outline-dark btn-sm me-2">
+                                    <i class="bi-person-lines-fill"></i>
+                                </a>
+                                <a href="{{ route('pasien.edit', $pasien->id) }}" class="btn btn-outline-dark btn-sm me-2">
+                                    <i class="bi-pencil-square"></i>
+                                </a>
+                                <form action="{{ route('pasien.destroy', $pasien->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pasien ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-dark btn-sm">
+                                        <i class="bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-
-    <script src="path/to/your/app.js"></script>
 </body>
 
 </html>

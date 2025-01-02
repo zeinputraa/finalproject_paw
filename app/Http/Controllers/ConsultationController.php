@@ -1,10 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Models\Dokter;
-use App\Models\Consultation;
+use Illuminate\Http\Request;
 
 class ConsultationController extends Controller
 {
@@ -13,8 +11,9 @@ class ConsultationController extends Controller
      */
     function index()
     {
-        $pageTitle = 'Consultasi';
-        return view('consultation.index', ['pageTitle' => $pageTitle]);
+        $pageTitle = 'Consultation Dokter';
+        $dokters = Dokter::all(); // Mengambil semua data dokter
+        return view('consultation.index', ['pageTitle' => $pageTitle, 'dokters' => $dokters]);
     }
 
     /**
@@ -22,7 +21,8 @@ class ConsultationController extends Controller
      */
     public function create()
     {
-        //
+        $pageTitle = 'Tambah Dokter';
+        return view('consultation.create', ['pageTitle' => $pageTitle]);
     }
 
     /**
@@ -30,7 +30,17 @@ class ConsultationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+            'umur' => 'required|integer|min:0',
+            'bidang_keahlian' => 'required|string|max:255',
+            'lokasi_praktik' => 'required|string|max:255',
+            'riwayat' => 'required|string',
+        ]);
+
+        Dokter::create($request->all());
+
+        return redirect()->route('consultation.index')->with('success', 'Dokter berhasil ditambahkan.');
     }
 
     /**
@@ -38,7 +48,9 @@ class ConsultationController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $dokter = Dokter::findOrFail($id);
+        $pageTitle = 'Detail Dokter';
+        return view('consultation.show', ['pageTitle' => $pageTitle, 'dokter' => $dokter]);
     }
 
     /**
@@ -46,7 +58,9 @@ class ConsultationController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $dokter = Dokter::findOrFail($id);
+        $pageTitle = 'Edit Dokter';
+        return view('consultation.edit', ['pageTitle' => $pageTitle, 'dokter' => $dokter]);
     }
 
     /**
@@ -54,7 +68,18 @@ class ConsultationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+            'umur' => 'required|integer|min:0',
+            'bidang_keahlian' => 'required|string|max:255',
+            'lokasi_praktik' => 'required|string|max:255',
+            'riwayat' => 'required|string',
+        ]);
+
+        $dokter = Dokter::findOrFail($id);
+        $dokter->update($request->all());
+
+        return redirect()->route('consultation.index')->with('success', 'Dokter berhasil diperbarui.');
     }
 
     /**
@@ -62,6 +87,9 @@ class ConsultationController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $dokter = Dokter::findOrFail($id);
+        $dokter->delete();
+
+        return redirect()->route('consultation.index')->with('success', 'Dokter berhasil dihapus.');
     }
 }
