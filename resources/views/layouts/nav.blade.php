@@ -38,7 +38,6 @@ $currentRouteName = Route::currentRouteName();
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}
                     </a>
-
                     <div class="dropdown-menu dropdown-menu" aria-labelledby="navbarDropdown">
                         <a href="" class="dropdown-item"><i class="bi-person-circle me-1"></i> My Profile</a>
                         <a class="dropdown-item text-danger" href="{{ route('logout') }}"
